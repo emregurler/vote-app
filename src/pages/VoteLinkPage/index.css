@@ -1,0 +1,39 @@
+.vote-link-container {
+  width: 350px;
+  min-width: 250px;
+  padding: 0 10px 0 10px;
+}
+
+.add-link-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #f3f3f3;
+  border: 1px solid #dbdada;
+  border-radius: 5px;
+  margin: 0 5px 0 5px;
+}
+
+.add-link-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  border: 1px solid #b9b9b9;
+  border-radius: 5px;
+  background-color: #e6e6e6;
+}
+
+.add-link-button-text {
+  font-size: 24px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px 0 20px;
+}
+
+.link-filter-select {
+  width: 150px;
+}

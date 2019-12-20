@@ -1,0 +1,47 @@
+.ant-layout-header {
+  background: initial;
+  line-height: initial;
+  height: auto;
+}
+
+.header {
+  margin: 0 100px 0 100px;
+  padding: 20px 0 6px 0;
+  border-bottom: 1px solid #7c7c7c96;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  /* background-color: #eeeeee; */
+}
+
+.header-site {
+  display: inline-block;
+}
+
+.header-site > span {
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.header-site-text {
+  color: #7c7c7c96;
+}
+
+.header-site-text-postfix {
+  color: grey;
+}
+
+.header-app-info > span {
+  font-size: 24px;
+}
+
+.header-app-info-link {
+  font-weight: 850;
+}
+
+.header-app-info-vote {
+  font-weight: 200;
+}
+.header-app-info-challenge {
+  font-weight: 300;
+}
