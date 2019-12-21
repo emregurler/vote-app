@@ -1,0 +1,46 @@
+.list-item-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-item-info {
+  width: 100%;
+  padding: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.list-item-info > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.square-button-point-text {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.list-item-point-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-item-vote-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  /* margin-left: 5;
+  margin-top: 10; */
+}
+
+.vote-div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
