@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Pagination } from 'antd'
 import PropTypes from 'prop-types'
-import LinkItem from '../LinkItem'
 import { getLinks } from '../../../../redux/actions'
+import LinkItem from '../LinkItem'
 
 const LinkList = ({ links, getLinks }) => {
   const total = links.length

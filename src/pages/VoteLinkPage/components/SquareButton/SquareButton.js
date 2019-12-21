@@ -7,8 +7,8 @@ const SquareButton = ({ content }) => {
   return <div className='square-button'>{content}</div>
 }
 
-// SquareButton.propTypes = {
-//   content: PropTypes.node
-// }
+SquareButton.propTypes = {
+  content: PropTypes.node
+}
 
 export default SquareButton

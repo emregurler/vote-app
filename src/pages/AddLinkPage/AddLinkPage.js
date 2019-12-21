@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
-import { Link, Redirect } from 'react-router-dom'
 import { addLink } from '../../redux/actions'
 
 const AddLinkPage = ({ form, addLink }) => {

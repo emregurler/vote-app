@@ -1,7 +1,7 @@
 import './index.css'
 
 import React from 'react'
-import SquareButton from '../SquareButton/SquareButton'
+import SquareButton from '../SquareButton'
 
 const AddLinkButton = () => {
   const onClickAddButton = () => {

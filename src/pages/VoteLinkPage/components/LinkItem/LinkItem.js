@@ -3,9 +3,9 @@ import './style.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import SquareButton from '../SquareButton/SquareButton'
-import { upvoteLink, downvoteLink, deleteLink } from '../../../../redux/actions'
 import { Icon } from 'antd'
+import { upvoteLink, downvoteLink, deleteLink } from '../../../../redux/actions'
+import SquareButton from '../SquareButton'
 import VoteButton from '../VoteButton'
 
 const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
