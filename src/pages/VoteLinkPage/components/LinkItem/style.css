@@ -1,6 +1,23 @@
 .list-item-container {
   display: flex;
   flex-direction: row;
+  position: relative;
+  margin: 7px 0 7px 0;
+  border-radius: 5px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.list-item-container:hover {
+  background-color: #f3f3f3;
+}
+
+.list-item-container:hover .list-item-remove-icon {
+  display: block;
 }
 
 .list-item-info {
@@ -12,7 +29,7 @@
   flex-direction: column;
 }
 
-.list-item-info > div {
+.list-item-info > div > div {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -35,12 +52,20 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  /* margin-left: 5;
-  margin-top: 10; */
 }
 
-.vote-div {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+.list-item-remove-icon {
+  display: none;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+}
+
+a {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+a:hover {
+  color: black;
 }

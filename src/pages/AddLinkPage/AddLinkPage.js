@@ -6,7 +6,6 @@ import { addLink } from '../../redux/actions'
 
 const AddLinkPage = ({ form, addLink }) => {
   const { getFieldDecorator } = form
-  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,16 +18,13 @@ const AddLinkPage = ({ form, addLink }) => {
           point: 0,
           updatedDate: new Date().getTime()
         }
-        addLink(newLink, (isSuccess) => {
-          isSuccess && setShouldRedirect(true)
-        })
+        addLink(newLink)
       }
     })
   }
 
   return (
     <React.Fragment>
-      {shouldRedirect && <Redirect to='/' />}
       <Link to='/'>return page</Link>
       <span>Add New Link</span>
       <Form onSubmit={handleSubmit} className='login-form'>

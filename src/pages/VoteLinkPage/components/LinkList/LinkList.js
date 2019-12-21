@@ -11,48 +11,44 @@ const LinkList = ({ links, getLinks }) => {
   const total = links.length
   const pageSize = 5
   const [page, setPage] = useState(1)
-  const [currentList, setCurrentList] = useState([...links].slice(0, pageSize))
+  const [currentList, setCurrentList] = useState([])
 
   useEffect(() => {
     getLinks()
   }, [])
 
   useEffect(() => {
-    //TODO:
-    onChangePage(1)
+    console.log('useEffet')
+    adjustPage(page)
   }, [links])
 
-  const onChangePage = (page) => {
+  const adjustPage = (page) => {
     const startFrom = (page - 1) * pageSize
     const end = startFrom + pageSize
     const currentList = links.slice(startFrom, end)
-    setCurrentList(currentList)
     setPage(page)
+    setCurrentList(currentList)
   }
 
   return (
     <div>
       {currentList.map((link) => (
-        <LinkItem
-          key={link.id}
-          id={link.id}
-          name={link.name}
-          url={link.url}
-          point={link.point}
-        />
+        <LinkItem key={link.id} link={link} />
       ))}
+
       <Pagination
         pageSize={5}
-        currentPage={page}
         total={total}
-        onChange={onChangePage}
+        currentPage={page}
+        onChange={adjustPage}
       />
     </div>
   )
 }
 
 LinkList.propTypes = {
-  links: PropTypes.array
+  links: PropTypes.array,
+  getLinks: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

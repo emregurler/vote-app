@@ -10,11 +10,10 @@ export const getLinksSuccess = (links) => {
   }
 }
 
-export const addLink = (newLink, callback) => {
+export const addLink = (newLink) => {
   return {
     type: types.ADD_LINK,
-    newLink,
-    callback
+    newLink
   }
 }
 export const addLinkSuccess = (newLink) => {

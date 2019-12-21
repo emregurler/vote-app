@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
+import axios from 'axios'
 
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { combinedReducers } from './store'
 import services from './redux/services'
+
+axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 const sagaMiddleware = createSagaMiddleware()
 

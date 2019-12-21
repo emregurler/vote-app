@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
 
       return { ...state, links: [...links] }
     case types.ADD_LINK_SUCCESS:
+      console.log('addlinksuccess', action.newLink)
       return {
         ...state,
         links: [...state.links, action.newLink]

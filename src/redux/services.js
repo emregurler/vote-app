@@ -9,92 +9,87 @@ import {
 import types from './action-types'
 import axios from 'axios'
 
-export function* getLinks() {
-  //request
-  const res = yield call(() =>
-    axios
-      .get('http://localhost:3001/links')
-      .then(function(response) {
-        // handle success
-        return response
-      })
-      .catch(function(error) {
-        // handle error
-        console.log(error)
-      })
-  )
-
-  yield put(getLinksSuccess(res.data))
+function fetchUpdateVoteLink(updatedLink) {
+  console.log(updatedLink)
+  return axios
+    .put(`/links/${updatedLink.id}`, updatedLink)
+    .then(function(response) {
+      console.log(response)
+      return response.data
+    })
 }
 
-export function* addLink({ newLink, callback }) {
-  //request
-  const res = yield call(() =>
-    axios
-      .post('http://localhost:3001/links', newLink)
-      .then(function(response) {
-        // handle success
-        return response
-      })
-      .catch(function(error) {
-        // handle error
-        console.log(error)
-      })
-  )
-  yield put(addLinkSuccess(res.data))
-  callback(res.status < 300)
+function fetchGetLinks() {
+  return axios.get('/links').then(function(response) {
+    return response.data
+  })
+}
+
+function fetchAddLink(newLink) {
+  return axios.post('/links', newLink).then(function(response) {
+    return response.data
+  })
+}
+
+function fetchDeleteLink(id) {
+  return axios.delete(`/links/${id}`).then(function(response) {
+    return response.data
+  })
+}
+
+export function* getLinks() {
+  try {
+    const links = yield call(fetchGetLinks)
+    yield put(getLinksSuccess(links))
+  } catch (error) {
+    console.log('ERROR:', error)
+  }
+}
+
+export function* addLink({ newLink }) {
+  try {
+    const addedLink = yield call(fetchAddLink, newLink)
+    yield put(addLinkSuccess(addedLink))
+  } catch (error) {
+    console.log('ERROR:', error)
+  }
 }
 
 export function* deleteLink({ id }) {
-  //request
-  debugger
-  const res = yield call(() =>
-    axios
-      .delete(`http://localhost:3001/links/${id}`)
-      .then(function(response) {
-        // handle success
-        return response
-      })
-      .catch(function(error) {
-        // handle error
-        console.log(error)
-      })
-  )
-  yield put(deleteLinkSuccess(id))
-  // callback(res.status < 300)
+  try {
+    yield call(fetchDeleteLink, id)
+    yield put(deleteLinkSuccess(id))
+  } catch (error) {
+    console.log('ERROR:', error)
+  }
 }
 
 export function* upvoteLink({ link }) {
-  //request
-  const updatedLink = { ...link, updatedDate: new Date().getTime() }
-  const res = yield call(() =>
-    axios
-      .put(`http://localhost:3001/links/${link.id}`, updatedLink)
-      .then(function(response) {
-        return response
-      })
-      .catch(function(error) {
-        console.log(error)
-      })
-  )
-
-  yield put(upvoteLinkSuccess(res.data))
+  const updatedLink = {
+    ...link,
+    point: link.point + 1,
+    updatedDate: new Date().getTime()
+  }
+  try {
+    const link = yield call(fetchUpdateVoteLink, updatedLink)
+    yield put(upvoteLinkSuccess(link))
+  } catch (error) {
+    console.log('ERROR:', error)
+  }
 }
 
 export function* downvoteLink({ link }) {
-  //request
-  const updatedLink = { ...link, updatedDate: new Date().getTime() }
-  const res = yield call(() =>
-    axios
-      .put(`http://localhost:3001/links/${link.id}`, updatedLink)
-      .then(function(response) {
-        return response
-      })
-      .catch(function(error) {
-        console.log(error)
-      })
-  )
-  yield put(downvoteLinkSuccess(res.data))
+  const updatedLink = {
+    ...link,
+    point: link.point - 1,
+    updatedDate: new Date().getTime()
+  }
+  try {
+    const link = yield call(fetchUpdateVoteLink, updatedLink)
+    yield put(downvoteLinkSuccess(link))
+  } catch (e) {
+    console.log('error:', e)
+  }
 }
 
 export default function* rootSaga() {

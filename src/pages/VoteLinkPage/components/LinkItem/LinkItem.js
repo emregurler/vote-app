@@ -6,16 +6,11 @@ import PropTypes from 'prop-types'
 import SquareButton from '../SquareButton/SquareButton'
 import { upvoteLink, downvoteLink, deleteLink } from '../../../../redux/actions'
 import { Icon } from 'antd'
+import VoteButton from '../VoteButton'
 
-const LinkItem = ({
-  id,
-  name,
-  url,
-  point,
-  upvoteLink,
-  downvoteLink,
-  deleteLink
-}) => {
+const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
+  const { id, name, url, point } = link
+
   const squareButtonContent = (
     <div className='list-item-point-content'>
       <span className='square-button-point-text'>{point}</span>
@@ -23,23 +18,35 @@ const LinkItem = ({
     </div>
   )
 
-  const onUpVote = (link) => {
-    const updatedLink = { ...link, point: link.point + 1 }
-    upvoteLink(updatedLink)
+  const onUpVote = () => {
+    upvoteLink(link)
   }
 
-  const onDownVote = (link) => {
-    const updatedLink = { ...link, point: link.point - 1 }
-    downvoteLink(updatedLink)
+  const onDownVote = () => {
+    downvoteLink(link)
   }
 
   const onDeleteItem = (id) => {
-    console.log(id)
     deleteLink(id)
   }
-
+  console.log('rerender')
   return (
     <div className='list-item-container'>
+      <SquareButton content={squareButtonContent} />
+      <div className='list-item-info'>
+        <div>
+          <div>{name}</div>
+          <div>({url})</div>
+        </div>
+        <div className='list-item-vote-container'>
+          <VoteButton text='Up Vote' iconType='caret-up' onClick={onUpVote} />
+          <VoteButton
+            text='Down Vote'
+            iconType='caret-down'
+            onClick={onDownVote}
+          />
+        </div>
+      </div>
       <Icon
         onClick={() => {
           onDeleteItem(id)
@@ -49,29 +56,6 @@ const LinkItem = ({
         theme='twoTone'
         twoToneColor='#eb2f96'
       />
-      <SquareButton content={squareButtonContent} />
-      <div className='list-item-info'>
-        <div>
-          <div>{name}</div>
-          <div>({url})</div>
-        </div>
-        <div className='list-item-vote-container'>
-          <div
-            onClick={() => onUpVote({ id, name, url, point })}
-            className='vote-div'
-          >
-            <Icon style={{ fontSize: 24 }} type='caret-up' theme='filled' />
-            <span>Up Vote</span>
-          </div>
-          <div
-            onClick={() => onDownVote({ id, name, url, point })}
-            className='vote-div'
-          >
-            <Icon style={{ fontSize: 24 }} type='caret-up' theme='filled' />
-            <span>Down Vote</span>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
