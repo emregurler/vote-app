@@ -1,22 +1,22 @@
 import './index.css'
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import AddLinkButton from './components/AddLinkButton'
-import LinkFilterSelect from './components/LinkFilterSelect'
 import LinkList from './components/LinkList'
 
-const VoteLinkPage = () => {
+const VoteLinkPage = ({ links }) => {
+  const shouldRenderList = !!links.length
   return (
     <div className='vote-link-page-container'>
-      <Link to='add-link'>
-        <AddLinkButton />
-      </Link>
-      <hr />
-      <LinkFilterSelect />
-      <LinkList />
+      <AddLinkButton />
+      {shouldRenderList && <LinkList />}
     </div>
   )
 }
 
-export default VoteLinkPage
+const mapStateToProps = (state) => ({
+  links: state.linkReducer.links
+})
+
+export default connect(mapStateToProps)(VoteLinkPage)
