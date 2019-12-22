@@ -2,6 +2,7 @@ html,
 body,
 #root {
   height: 100vh;
+  color: black;
 }
 
 body {
@@ -11,9 +12,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: black;
+}
+
+body a {
+  color: black;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+body .ant-message-notice-content {
+  font-size: 30px;
+  padding: 15px 60px;
+  border-radius: 10px;
+  background-color: hsla(115, 100%, 90%, 0.89);
+}
+
+body .ant-message-success .anticon {
+  display: none;
 }

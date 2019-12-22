@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import axios from 'axios'
+import { message } from 'antd'
 
 import './index.css'
 import App from './App'
@@ -13,6 +14,11 @@ import sagas from './redux/sagas'
 
 axios.defaults.baseURL = 'http://localhost:3001'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
+
+message.config({
+  top: 50,
+  maxCount: 1
+})
 
 const sagaMiddleware = createSagaMiddleware()
 
