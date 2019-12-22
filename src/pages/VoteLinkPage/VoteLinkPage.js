@@ -1,16 +1,19 @@
 import './index.css'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getLinks } from '../../redux/actions'
+import { getLinks, resetLinkReducer } from '../../redux/actions'
 import AddLinkButton from './components/AddLinkButton'
 import LinkList from './components/LinkList'
 
-const VoteLinkPage = ({ links, getLinks }) => {
+const VoteLinkPage = ({ links, getLinks, resetLinkReducer }) => {
   const [shouldRenderList, setShouldRenderList] = useState(false)
 
   useEffect(() => {
     getLinks()
+    return () => {
+      resetLinkReducer()
+    }
   }, [getLinks])
 
   useEffect(() => {
@@ -31,7 +34,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  getLinks
+  getLinks,
+  resetLinkReducer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoteLinkPage)

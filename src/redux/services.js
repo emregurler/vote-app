@@ -12,11 +12,9 @@ export default {
     })
   },
   fetchUpdateVoteLink(updatedLink) {
-    console.log(updatedLink)
     return axios
       .put(`/links/${updatedLink.id}`, updatedLink)
       .then(function(response) {
-        console.log(response)
         return response.data
       })
   },

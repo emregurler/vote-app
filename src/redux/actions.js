@@ -67,9 +67,15 @@ export const downvoteLinkSuccess = (link) => {
   }
 }
 
-export const setSelectedFilter = (selectedFilter) => {
+export const setSelectedOrder = (selectedOrder) => {
   return {
-    type: types.SET_SELECTED_FILTER,
-    selectedFilter
+    type: types.SET_SELECTED_ORDER,
+    selectedOrder
+  }
+}
+
+export const resetLinkReducer = () => {
+  return {
+    type: types.RESET_LINK_REDUCER
   }
 }

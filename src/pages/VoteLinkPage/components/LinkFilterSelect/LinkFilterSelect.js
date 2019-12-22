@@ -4,23 +4,23 @@ import React from 'react'
 import { Select } from 'antd'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setSelectedFilter } from '../../../../redux/actions'
-import { linkFilterOptions } from '../../constants'
+import { setSelectedOrder } from '../../../../redux/actions'
+import { linksOrderOptions } from '../../constants'
 
 const { Option } = Select
 
-const LinkFilterSelect = ({ selectedFilter, setSelectedFilter }) => {
+const LinkFilterSelect = ({ selectedOrder, setSelectedOrder }) => {
   const onChangeFilter = (value) => {
-    setSelectedFilter(value)
+    setSelectedOrder(value)
   }
   return (
     <Select
       className='link-filter-select'
-      defaultValue={linkFilterOptions.defaultTitle}
+      defaultValue={linksOrderOptions.defaultTitle}
       onChange={onChangeFilter}
-      {...(selectedFilter && { value: selectedFilter })}
+      {...(selectedOrder && { value: selectedOrder })}
     >
-      {Object.values(linkFilterOptions.options).map((filterOption, i) => (
+      {Object.values(linksOrderOptions.options).map((filterOption, i) => (
         <Option key={i} value={filterOption.value}>
           {filterOption.title}
         </Option>
@@ -30,15 +30,15 @@ const LinkFilterSelect = ({ selectedFilter, setSelectedFilter }) => {
 }
 
 LinkFilterSelect.propTypes = {
-  setSelectedFilter: PropTypes.func
+  setSelectedOrder: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  selectedFilter: state.linkReducer.selectedFilter
+  selectedOrder: state.linkReducer.selectedOrder
 })
 
 const mapDispatchToProps = {
-  setSelectedFilter
+  setSelectedOrder
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LinkFilterSelect)

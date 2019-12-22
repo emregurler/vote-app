@@ -6,47 +6,76 @@ import { Pagination, Divider } from 'antd'
 import PropTypes from 'prop-types'
 import LinkItem from '../LinkItem'
 import LinkFilterSelect from '../LinkFilterSelect'
+import { linksOrderOptions } from '../../constants'
 
-const LinkList = ({ links }) => {
+const LinkList = ({ links, selectedOrder }) => {
+  const [page, setPage] = useState(1)
+  const [currentPageLinks, setCurrentPageLinks] = useState([])
+
   const total = links.length
   const pageSize = 5
-  const [page, setPage] = useState(1)
-  const [currentList, setCurrentList] = useState([])
+  const isVisiblePagination = total > pageSize
 
   useEffect(() => {
-    adjustPage(page)
-  }, [links])
+    setPage(1)
+    calculateCurrentList()
+  }, [selectedOrder])
 
-  const adjustPage = (page) => {
+  useEffect(() => {
+    calculateCurrentList()
+  }, [links, page])
+
+  const orderBy = (order) => {
+    if (!order || order === linksOrderOptions.options.default.value) {
+      return [...links]
+    }
+    let func
+    if (order === 'less') {
+      func = function(a, b) {
+        return a.point - b.point || b.updatedDate - a.updatedDate
+      }
+    } else {
+      func = function(a, b) {
+        return b.point - a.point || b.updatedDate - a.updatedDate
+      }
+    }
+    return [...links].sort(func)
+  }
+
+  const calculateCurrentList = () => {
+    const orderedList = orderBy(selectedOrder)
     const startFrom = (page - 1) * pageSize
     const end = startFrom + pageSize
-    const currentList = links.slice(startFrom, end)
-    setPage(page)
-    setCurrentList(currentList)
+    const currentList = orderedList.slice(startFrom, end)
+    setCurrentPageLinks(currentList)
   }
 
   return (
     <>
       <Divider />
       <LinkFilterSelect />
-      {currentList.map((link) => (
+      {currentPageLinks.map((link) => (
         <LinkItem key={link.id} link={link} />
       ))}
-      <Pagination
-        pageSize={5}
-        total={total}
-        currentPage={page}
-        onChange={adjustPage}
-      />
+      {isVisiblePagination && (
+        <Pagination
+          pageSize={5}
+          total={total}
+          currentPage={page}
+          onChange={setPage}
+        />
+      )}
     </>
   )
 }
 
 LinkList.propTypes = {
+  selectedOrder: PropTypes.string,
   links: PropTypes.array
 }
 
 const mapStateToProps = (state) => ({
+  selectedOrder: state.linkReducer.selectedOrder,
   links: state.linkReducer.links
 })
 

@@ -2,7 +2,7 @@ import types from './action-types'
 
 const initialState = {
   links: [],
-  selectedFilter: undefined
+  selectedOrder: undefined
 }
 
 export default (state = initialState, action) => {
@@ -10,10 +10,8 @@ export default (state = initialState, action) => {
     case types.GET_LINKS_SUCCESS:
       const { links } = action
       links.sort((a, b) => b.updatedDate - a.updatedDate)
-
       return { ...state, links: [...links] }
     case types.ADD_LINK_SUCCESS:
-      console.log('addlinksuccess', action.newLink)
       return {
         ...state,
         links: [...state.links, action.newLink]
@@ -38,10 +36,14 @@ export default (state = initialState, action) => {
           link.id === action.link.id ? action.link : link
         )
       }
-    case types.SET_SELECTED_FILTER:
+    case types.SET_SELECTED_ORDER:
       return {
         ...state,
-        selectedFilter: action.selectedFilter
+        selectedOrder: action.selectedOrder
+      }
+    case types.RESET_LINK_REDUCER:
+      return {
+        ...initialState
       }
     default:
       return state

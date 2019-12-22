@@ -30,19 +30,33 @@ const AddLinkPage = ({ form, addLink }) => {
     <React.Fragment>
       <Col className='add-link-page-container'>
         <Row className='return-to-list-container'>
-          <Icon className='return-to-list-icon' type='arrow-left' />
-          <Link to='/'>Return to List</Link>
+          <Link to='/'>
+            <Icon className='return-to-list-icon' type='arrow-left' />
+            Return to List
+          </Link>
         </Row>
         <Row className='add-new-link-title'>Add New Link</Row>
         <Row>
           <Form onSubmit={handleSubmit} className='login-form'>
             <Form.Item label='Link Name'>
-              {getFieldDecorator('linkname')(
-                <Input placeholder='e.g. Alphabet' />
-              )}
+              {getFieldDecorator('linkname', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please Enter a Name'
+                  }
+                ]
+              })(<Input placeholder='e.g. Alphabet' />)}
             </Form.Item>
             <Form.Item label='Link URL'>
-              {getFieldDecorator('linkurl')(
+              {getFieldDecorator('linkurl', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please Enter a Url'
+                  }
+                ]
+              })(
                 <Input
                   addonBefore={addBeforeLink}
                   placeholder='e.g. http://xyz.abc'
