@@ -2,24 +2,43 @@ import './index.css'
 
 import React from 'react'
 import { Select } from 'antd'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { setSelectedFilter } from '../../../../redux/actions'
+import { linkFilterOptions } from '../../constants'
 
 const { Option } = Select
 
-const LinkFilterSelect = () => {
+const LinkFilterSelect = ({ selectedFilter, setSelectedFilter }) => {
   const onChangeFilter = (value) => {
-    console.log(value)
+    setSelectedFilter(value)
   }
   return (
     <Select
       className='link-filter-select'
-      defaultValue='orderBy'
+      defaultValue={linkFilterOptions.defaultTitle}
       onChange={onChangeFilter}
+      {...(selectedFilter && { value: selectedFilter })}
     >
-      <Option value='orderBy'>Order By</Option>
-      <Option value='low'>Points: Low to High</Option>
-      <Option value='high'>Points: High to Low</Option>
+      {Object.values(linkFilterOptions.options).map((filterOption, i) => (
+        <Option key={i} value={filterOption.value}>
+          {filterOption.title}
+        </Option>
+      ))}
     </Select>
   )
 }
 
-export default LinkFilterSelect
+LinkFilterSelect.propTypes = {
+  setSelectedFilter: PropTypes.func
+}
+
+const mapStateToProps = (state) => ({
+  selectedFilter: state.linkReducer.selectedFilter
+})
+
+const mapDispatchToProps = {
+  setSelectedFilter
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LinkFilterSelect)

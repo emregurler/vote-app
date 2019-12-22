@@ -2,10 +2,11 @@ import './style.css'
 
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Pagination } from 'antd'
+import { Pagination, Divider } from 'antd'
 import PropTypes from 'prop-types'
 import { getLinks } from '../../../../redux/actions'
 import LinkItem from '../LinkItem'
+import LinkFilterSelect from '../LinkFilterSelect'
 
 const LinkList = ({ links, getLinks }) => {
   const total = links.length
@@ -31,18 +32,19 @@ const LinkList = ({ links, getLinks }) => {
   }
 
   return (
-    <div>
+    <>
+      <Divider />
+      <LinkFilterSelect />
       {currentList.map((link) => (
         <LinkItem key={link.id} link={link} />
       ))}
-
       <Pagination
         pageSize={5}
         total={total}
         currentPage={page}
         onChange={adjustPage}
       />
-    </div>
+    </>
   )
 }
 

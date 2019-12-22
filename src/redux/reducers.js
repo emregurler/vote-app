@@ -1,7 +1,8 @@
 import types from './action-types'
 
 const initialState = {
-  links: []
+  links: [],
+  selectedFilter: undefined
 }
 
 export default (state = initialState, action) => {
@@ -37,7 +38,11 @@ export default (state = initialState, action) => {
           link.id === action.link.id ? action.link : link
         )
       }
-
+    case types.SET_SELECTED_FILTER:
+      return {
+        ...state,
+        selectedFilter: action.selectedFilter
+      }
     default:
       return state
   }
