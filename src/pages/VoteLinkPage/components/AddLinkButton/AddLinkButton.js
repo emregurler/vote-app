@@ -2,6 +2,7 @@ import './index.css'
 
 import React from 'react'
 import SquareButton from '../SquareButton'
+import { Link } from 'react-router-dom'
 
 const AddLinkButton = () => {
   const onClickAddButton = () => {
@@ -15,10 +16,12 @@ const AddLinkButton = () => {
   )
 
   return (
-    <div onClick={onClickAddButton} className='add-link-container'>
-      <SquareButton content={content} />
-      <span className='add-link-button-text'>SUBMIT A LINK</span>
-    </div>
+    <Link to='add-link'>
+      <div onClick={onClickAddButton} className='add-link-container'>
+        <SquareButton content={content} />
+        <span className='add-link-button-text'>SUBMIT A LINK</span>
+      </div>
+    </Link>
   )
 }
 

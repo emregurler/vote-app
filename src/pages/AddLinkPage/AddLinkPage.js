@@ -1,11 +1,14 @@
+import './style.css'
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Input, Button } from 'antd'
+import { Row, Col, Form, Input, Button, Icon } from 'antd'
 import { addLink } from '../../redux/actions'
 
 const AddLinkPage = ({ form, addLink }) => {
   const { getFieldDecorator } = form
+  const addBeforeLink = 'http://'
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -14,7 +17,7 @@ const AddLinkPage = ({ form, addLink }) => {
         console.log('Received values of form: ', values)
         const newLink = {
           name: values.linkname,
-          url: values.linkurl,
+          url: addBeforeLink + values.linkurl,
           point: 0,
           updatedDate: new Date().getTime()
         }
@@ -25,27 +28,40 @@ const AddLinkPage = ({ form, addLink }) => {
 
   return (
     <React.Fragment>
-      <Link to='/'>return page</Link>
-      <span>Add New Link</span>
-      <Form onSubmit={handleSubmit} className='login-form'>
-        <Form.Item>
-          {getFieldDecorator('linkname')(<Input placeholder='e.g. Alphabet' />)}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('linkurl')(
-            <Input placeholder='e.g. http://xyz.abc' />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type='primary'
-            htmlType='submit'
-            className='login-form-button'
-          >
-            ADD
-          </Button>
-        </Form.Item>
-      </Form>
+      <Col className='add-link-page-container'>
+        <Row className='return-to-list-container'>
+          <Icon className='return-to-list-icon' type='arrow-left' />
+          <Link to='/'>Return to List</Link>
+        </Row>
+        <Row className='add-new-link-title'>Add New Link</Row>
+        <Row>
+          <Form onSubmit={handleSubmit} className='login-form'>
+            <Form.Item label='Link Name'>
+              {getFieldDecorator('linkname')(
+                <Input placeholder='e.g. Alphabet' />
+              )}
+            </Form.Item>
+            <Form.Item label='Link URL'>
+              {getFieldDecorator('linkurl')(
+                <Input
+                  addonBefore={addBeforeLink}
+                  placeholder='e.g. http://xyz.abc'
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Button
+                size='large'
+                type='primary'
+                htmlType='submit'
+                className='add-link-button'
+              >
+                ADD
+              </Button>
+            </Form.Item>
+          </Form>
+        </Row>
+      </Col>
     </React.Fragment>
   )
 }
