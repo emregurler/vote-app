@@ -1,16 +1,11 @@
 {
   "links": [
     {
-      "url": "emre.com",
-      "point": 0,
-      "updatedDate": 1577038881986,
-      "id": 1
-    },
-    {
+      "name": "emre",
       "url": "http://emre.com",
-      "point": 0,
-      "updatedDate": 1577038992282,
-      "id": 2
+      "point": 53,
+      "updatedDate": 1577039875541,
+      "id": 1
     }
   ]
 }

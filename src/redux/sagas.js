@@ -13,7 +13,6 @@ import API from './services'
 import CustomMessage from '../components/CustomMessage'
 
 const generateCustomMessage = (name, restOfText) => {
-  console.log(name, restOfText)
   return <CustomMessage name={name} restOfText={restOfText} />
 }
 
@@ -23,9 +22,6 @@ export function* getLinks() {
   try {
     const links = yield call(API.fetchGetLinks)
     yield put(getLinksSuccess(links))
-    message.success(
-      generateCustomMessage('ALL LINKS', 'are succesfully fetched')
-    )
   } catch (error) {
     console.log('ERROR:', error)
   }
@@ -45,11 +41,8 @@ export function* deleteLink({ id }) {
   try {
     yield call(API.fetchDeleteLink, id)
     const links = yield select(getStateLinks)
-    console.log('asfjajggsjksjgshgs', links)
     const deletedLink = links.find((link) => link.id === id)
-    console.log('deleted1', deletedLink)
     yield put(deleteLinkSuccess(id))
-    console.log('deleted2', deletedLink)
     message.success(generateCustomMessage(deletedLink.name, 'removed'))
   } catch (error) {
     console.log('ERROR:', error)

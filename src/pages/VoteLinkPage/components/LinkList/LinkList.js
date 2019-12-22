@@ -4,22 +4,16 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Pagination, Divider } from 'antd'
 import PropTypes from 'prop-types'
-import { getLinks } from '../../../../redux/actions'
 import LinkItem from '../LinkItem'
 import LinkFilterSelect from '../LinkFilterSelect'
 
-const LinkList = ({ links, getLinks }) => {
+const LinkList = ({ links }) => {
   const total = links.length
   const pageSize = 5
   const [page, setPage] = useState(1)
   const [currentList, setCurrentList] = useState([])
 
   useEffect(() => {
-    getLinks()
-  }, [])
-
-  useEffect(() => {
-    console.log('useEffet')
     adjustPage(page)
   }, [links])
 
@@ -49,16 +43,11 @@ const LinkList = ({ links, getLinks }) => {
 }
 
 LinkList.propTypes = {
-  links: PropTypes.array,
-  getLinks: PropTypes.func
+  links: PropTypes.array
 }
 
 const mapStateToProps = (state) => ({
   links: state.linkReducer.links
 })
 
-const mapDispatchToProps = {
-  getLinks
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LinkList)
+export default connect(mapStateToProps)(LinkList)

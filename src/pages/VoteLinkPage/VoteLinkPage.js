@@ -1,12 +1,23 @@
 import './index.css'
 
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
+import { getLinks } from '../../redux/actions'
 import AddLinkButton from './components/AddLinkButton'
 import LinkList from './components/LinkList'
 
-const VoteLinkPage = ({ links }) => {
-  const shouldRenderList = !!links.length
+const VoteLinkPage = ({ links, getLinks }) => {
+  const [shouldRenderList, setShouldRenderList] = useState(false)
+
+  useEffect(() => {
+    getLinks()
+  }, [getLinks])
+
+  useEffect(() => {
+    const should = !!links.length
+    setShouldRenderList(should)
+  }, [links])
+
   return (
     <div className='vote-link-page-container'>
       <AddLinkButton />
@@ -19,4 +30,8 @@ const mapStateToProps = (state) => ({
   links: state.linkReducer.links
 })
 
-export default connect(mapStateToProps)(VoteLinkPage)
+const mapDispatchToProps = {
+  getLinks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VoteLinkPage)
