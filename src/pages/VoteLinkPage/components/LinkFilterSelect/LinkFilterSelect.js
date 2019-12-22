@@ -30,6 +30,7 @@ const LinkFilterSelect = ({ selectedOrder, setSelectedOrder }) => {
 }
 
 LinkFilterSelect.propTypes = {
+  selectedOrder: PropTypes.string,
   setSelectedOrder: PropTypes.func
 }
 

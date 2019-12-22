@@ -61,9 +61,10 @@ const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
 }
 
 LinkItem.propTypes = {
-  name: PropTypes.string,
-  url: PropTypes.string,
-  point: PropTypes.number
+  link: PropTypes.object,
+  upvoteLink: PropTypes.func,
+  downvoteLink: PropTypes.func,
+  deleteLink: PropTypes.func
 }
 
 const mapDispatchToProps = {
