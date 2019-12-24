@@ -1,6 +1,8 @@
 Simple vote app for shown links. You can simply add new link, delete, upvote, or
 downvote
 
+Used Libraries: React(hooks), Redux, Redux-saga, antd, axios, json-server
+
 # To run application
 
 ## 1 - install packages
