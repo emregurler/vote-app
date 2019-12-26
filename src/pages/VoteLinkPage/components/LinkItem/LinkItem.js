@@ -29,7 +29,6 @@ const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
   const onDeleteItem = (id) => {
     deleteLink(id)
   }
-  console.log('rerender')
   return (
     <div className='list-item-container'>
       <SquareButton content={squareButtonContent} />

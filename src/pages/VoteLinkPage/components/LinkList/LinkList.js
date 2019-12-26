@@ -31,13 +31,9 @@ const LinkList = ({ links, selectedOrder }) => {
     }
     let func
     if (order === 'less') {
-      func = function(a, b) {
-        return a.point - b.point || b.updatedDate - a.updatedDate
-      }
+      func = (a, b) => a.point - b.point || b.updatedDate - a.updatedDate
     } else {
-      func = function(a, b) {
-        return b.point - a.point || b.updatedDate - a.updatedDate
-      }
+      func = (a, b) => b.point - a.point || b.updatedDate - a.updatedDate
     }
     return [...links].sort(func)
   }

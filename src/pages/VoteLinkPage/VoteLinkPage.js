@@ -14,7 +14,7 @@ const VoteLinkPage = ({ links, getLinks, resetLinkReducer }) => {
     return () => {
       resetLinkReducer()
     }
-  }, [getLinks])
+  }, [getLinks, resetLinkReducer])
 
   useEffect(() => {
     const should = !!links.length
