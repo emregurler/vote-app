@@ -1,15 +1,13 @@
 import './style.css'
 
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Icon } from 'antd'
-import { upvoteLink, downvoteLink, deleteLink } from '../../../../redux/actions'
 import SquareButton from '../SquareButton'
 import VoteButton from '../VoteButton'
 
-const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
-  const { id, name, url, point } = link
+const LinkItem = ({ link, onUpvote, onDownvote, onDelete }) => {
+  const { name, url, point } = link
 
   const squareButtonContent = (
     <div className='list-item-point-content'>
@@ -18,16 +16,16 @@ const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
     </div>
   )
 
-  const onUpVote = () => {
-    upvoteLink(link)
+  const handleUpvote = () => {
+    onUpvote(link)
   }
 
-  const onDownVote = () => {
-    downvoteLink(link)
+  const handleDownvote = () => {
+    onDownvote(link)
   }
 
-  const onDeleteItem = (id) => {
-    deleteLink(id)
+  const handleDelete = () => {
+    onDelete(link)
   }
   return (
     <div className='list-item-container'>
@@ -38,18 +36,20 @@ const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
           <div>({url})</div>
         </div>
         <div className='list-item-vote-container'>
-          <VoteButton text='Up Vote' iconType='caret-up' onClick={onUpVote} />
+          <VoteButton
+            text='Up Vote'
+            iconType='caret-up'
+            onClick={handleUpvote}
+          />
           <VoteButton
             text='Down Vote'
             iconType='caret-down'
-            onClick={onDownVote}
+            onClick={handleDownvote}
           />
         </div>
       </div>
       <Icon
-        onClick={() => {
-          onDeleteItem(id)
-        }}
+        onClick={handleDelete}
         className='list-item-remove-icon'
         type='minus-circle'
         theme='twoTone'
@@ -60,16 +60,7 @@ const LinkItem = ({ link, upvoteLink, downvoteLink, deleteLink }) => {
 }
 
 LinkItem.propTypes = {
-  link: PropTypes.object,
-  upvoteLink: PropTypes.func,
-  downvoteLink: PropTypes.func,
-  deleteLink: PropTypes.func
+  link: PropTypes.object
 }
 
-const mapDispatchToProps = {
-  upvoteLink,
-  downvoteLink,
-  deleteLink
-}
-
-export default connect(null, mapDispatchToProps)(LinkItem)
+export default LinkItem

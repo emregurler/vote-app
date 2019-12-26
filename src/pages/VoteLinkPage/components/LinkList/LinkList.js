@@ -2,19 +2,28 @@ import './style.css'
 
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Pagination, Divider } from 'antd'
+import { Pagination, Divider, Button, Modal, Row } from 'antd'
 import PropTypes from 'prop-types'
+import { upvoteLink, downvoteLink, deleteLink } from '../../../../redux/actions'
 import LinkItem from '../LinkItem'
 import LinkFilterSelect from '../LinkFilterSelect'
 import { linksOrderOptions } from '../../constants'
 
-const LinkList = ({ links, selectedOrder }) => {
+const LinkList = ({
+  links,
+  selectedOrder,
+  upvoteLink,
+  downvoteLink,
+  deleteLink
+}) => {
   const [page, setPage] = useState(1)
+  const [deletingLink, setDeletingLink] = useState(undefined)
   const [currentPageLinks, setCurrentPageLinks] = useState([])
 
   const total = links.length
   const pageSize = 5
   const isVisiblePagination = total > pageSize
+  const isVisibleDeleteModal = !!deletingLink
 
   useEffect(() => {
     setPage(1)
@@ -46,12 +55,39 @@ const LinkList = ({ links, selectedOrder }) => {
     setCurrentPageLinks(currentList)
   }
 
+  const handleUpvoteLink = (link) => {
+    upvoteLink(link)
+  }
+
+  const handleDownvoteLink = (link) => {
+    downvoteLink(link)
+  }
+  const handleDeleteLink = (link) => {
+    setDeletingLink(link)
+  }
+
+  const handleCancelDelete = () => {
+    setDeletingLink(undefined)
+  }
+
+  const handleConfirmDelete = () => {
+    deleteLink(deletingLink.id, () => {
+      setDeletingLink(undefined)
+    })
+  }
+
   return (
     <>
       <Divider />
       <LinkFilterSelect />
       {currentPageLinks.map((link) => (
-        <LinkItem key={link.id} link={link} />
+        <LinkItem
+          key={link.id}
+          link={link}
+          onUpvote={handleUpvoteLink}
+          onDownvote={handleDownvoteLink}
+          onDelete={handleDeleteLink}
+        />
       ))}
       {isVisiblePagination && (
         <Pagination
@@ -60,6 +96,40 @@ const LinkList = ({ links, selectedOrder }) => {
           currentPage={page}
           onChange={setPage}
         />
+      )}
+
+      {deletingLink && (
+        <Modal
+          className='delete-modal'
+          visible={isVisibleDeleteModal}
+          title='Remove Link'
+          onCancel={handleCancelDelete}
+          footer={null}
+        >
+          <Row type='flex' justify='center' className='delete-modal-text'>
+            Do you want to remove:
+          </Row>
+          <Row type='flex' justify='center' className='delete-modal-list-name'>
+            {deletingLink.name}
+          </Row>
+          <Row type='flex' justify='center'>
+            <Button
+              className='delete-modal-button'
+              key='submit'
+              onClick={handleConfirmDelete}
+            >
+              OK
+            </Button>
+
+            <Button
+              className='delete-modal-button'
+              key='back'
+              onClick={handleCancelDelete}
+            >
+              CANCEL
+            </Button>
+          </Row>
+        </Modal>
       )}
     </>
   )
@@ -75,4 +145,10 @@ const mapStateToProps = (state) => ({
   links: state.linkReducer.links
 })
 
-export default connect(mapStateToProps)(LinkList)
+const mapDispatchToProps = {
+  upvoteLink,
+  downvoteLink,
+  deleteLink
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LinkList)

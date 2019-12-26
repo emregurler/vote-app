@@ -37,7 +37,7 @@ export function* addLink({ newLink }) {
   }
 }
 
-export function* deleteLink({ id }) {
+export function* deleteLink({ id, callback }) {
   try {
     yield call(API.fetchDeleteLink, id)
     const links = yield select(getStateLinks)
@@ -46,6 +46,8 @@ export function* deleteLink({ id }) {
     message.success(generateCustomMessage(deletedLink.name, 'removed'))
   } catch (error) {
     console.log('ERROR:', error)
+  } finally {
+    callback()
   }
 }
 
@@ -72,8 +74,8 @@ export function* downvoteLink({ link }) {
   try {
     const link = yield call(API.fetchUpdateVoteLink, updatedLink)
     yield put(downvoteLinkSuccess(link))
-  } catch (e) {
-    console.log('error:', e)
+  } catch (error) {
+    console.log('ERROR:', error)
   }
 }
 

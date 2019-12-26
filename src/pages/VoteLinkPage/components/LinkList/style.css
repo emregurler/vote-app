@@ -1,0 +1,41 @@
+.delete-modal .ant-modal-header {
+  background-color: black;
+}
+.delete-modal .ant-modal-close .ant-modal-close-x,
+.delete-modal .ant-modal-header .ant-modal-title {
+  font-weight: 700;
+  color: white;
+}
+
+.delete-modal-text {
+  color: rgb(121, 121, 121);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.delete-modal-list-name {
+  color: black;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.delete-modal-button {
+  height: 40px;
+  margin: 20px 15px 10px 15px;
+  padding: 0px 42px;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 40px;
+  background-color: black;
+  border-color: black;
+  color: white;
+}
+
+.delete-modal-button:hover,
+.delete-modal-button:active,
+.delete-modal-button:focus {
+  background-color: rgba(0, 0, 0, 0.65);
+  border-color: black;
+  color: white;
+}

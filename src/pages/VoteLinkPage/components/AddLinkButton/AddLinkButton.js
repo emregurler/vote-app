@@ -14,12 +14,7 @@ const AddLinkButton = () => {
 
   return (
     <Link to='add-link'>
-      <Row
-        type='flex'
-        justify='space-between'
-        align='center'
-        className='add-link-container'
-      >
+      <Row type='flex' justify='space-between' className='add-link-container'>
         <SquareButton content={content} />
         <span className='add-link-button-text'>SUBMIT A LINK</span>
       </Row>

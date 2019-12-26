@@ -25,10 +25,11 @@ export const addLinkSuccess = (newLink) => {
   }
 }
 
-export const deleteLink = (id) => {
+export const deleteLink = (id, callback) => {
   return {
     type: types.DELETE_LINK,
-    id
+    id,
+    callback
   }
 }
 

@@ -14,7 +14,6 @@ const AddLinkPage = ({ form, addLink }) => {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
         const newLink = {
           name: values.linkname,
           url: addBeforeLink + values.linkurl,
