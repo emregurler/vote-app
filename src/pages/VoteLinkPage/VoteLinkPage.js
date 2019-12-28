@@ -1,4 +1,4 @@
-import './index.css'
+import './VoteLinkPage.css'
 
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'

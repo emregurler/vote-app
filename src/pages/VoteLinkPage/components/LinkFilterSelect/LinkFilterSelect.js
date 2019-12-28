@@ -1,4 +1,4 @@
-import './index.css'
+import './LinkFilterSelect.css'
 
 import React from 'react'
 import { Select } from 'antd'

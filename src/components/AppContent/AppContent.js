@@ -1,4 +1,4 @@
-import './index.css'
+import './AppContent.css'
 
 import React from 'react'
 import { Layout } from 'antd'

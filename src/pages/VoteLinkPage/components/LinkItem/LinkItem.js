@@ -1,4 +1,4 @@
-import './style.css'
+import './LinkItem.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

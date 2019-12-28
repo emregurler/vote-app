@@ -1,4 +1,4 @@
-import './style.css'
+import './VoteButton.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

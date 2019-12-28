@@ -10,7 +10,7 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { combinedReducers } from './store'
-import sagas from './redux/sagas'
+import saga from './redux/saga'
 
 axios.defaults.baseURL = 'http://localhost:3001'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -35,7 +35,7 @@ const enhancer = composeEnhancers(
 )
 const store = createStore(combinedReducers, enhancer)
 
-sagaMiddleware.run(sagas)
+sagaMiddleware.run(saga)
 
 ReactDOM.render(
   <Provider store={store}>

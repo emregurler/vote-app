@@ -1,4 +1,4 @@
-import './index.css'
+import './SquareButton.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

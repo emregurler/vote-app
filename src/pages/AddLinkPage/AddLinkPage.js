@@ -1,4 +1,4 @@
-import './style.css'
+import './AddLinkPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'

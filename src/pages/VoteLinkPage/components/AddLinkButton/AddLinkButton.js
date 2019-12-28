@@ -1,4 +1,4 @@
-import './index.css'
+import './AddLinkButton.css'
 
 import React from 'react'
 import SquareButton from '../SquareButton'
