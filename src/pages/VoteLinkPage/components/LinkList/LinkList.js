@@ -22,7 +22,6 @@ const LinkList = ({
 
   const total = links.length
   const pageSize = 5
-  const isVisiblePagination = total > pageSize
   const isVisibleDeleteModal = !!deletingLink
 
   useEffect(() => {
@@ -89,15 +88,14 @@ const LinkList = ({
           onDelete={handleDeleteLink}
         />
       ))}
-      {isVisiblePagination && (
-        <Pagination
-          pageSize={5}
-          total={total}
-          currentPage={page}
-          onChange={setPage}
-        />
-      )}
-
+      <Pagination
+        showLessItems
+        hideOnSinglePage
+        pageSize={5}
+        total={total}
+        currentPage={page}
+        onChange={setPage}
+      />
       {deletingLink && (
         <Modal
           className='delete-modal'

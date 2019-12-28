@@ -39,3 +39,7 @@
   border-color: black;
   color: white;
 }
+
+.ant-pagination {
+  text-align: center;
+}
