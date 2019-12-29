@@ -2,6 +2,7 @@ import types from './action-types'
 
 const initialState = {
   links: [],
+  currentPage: 1,
   selectedOrder: undefined
 }
 
@@ -39,7 +40,13 @@ export default (state = initialState, action) => {
     case types.SET_SELECTED_ORDER:
       return {
         ...state,
+        currentPage: 1,
         selectedOrder: action.selectedOrder
+      }
+    case types.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.currentPage
       }
     case types.RESET_LINK_REDUCER:
       return {
