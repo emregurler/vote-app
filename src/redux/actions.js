@@ -74,6 +74,12 @@ export const setSelectedOrder = (selectedOrder) => {
     selectedOrder
   }
 }
+export const setCurrentPage = (page) => {
+  return {
+    type: types.SET_CURRENT_PAGE,
+    currentPage: page
+  }
+}
 
 export const resetLinkReducer = () => {
   return {

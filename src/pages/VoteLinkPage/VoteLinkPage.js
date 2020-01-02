@@ -1,40 +1,86 @@
 import './VoteLinkPage.css'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { getLinks, resetLinkReducer } from '../../redux/actions'
+import { getLinks, setCurrentPage, resetLinkReducer } from '../../redux/actions'
+import { linksOrderOptions } from './constants'
 import AddLinkButton from './components/AddLinkButton'
-import LinkList from './components/LinkList'
+import PaginatedList from './components/PaginatedList/PaginatedList'
 
-const VoteLinkPage = ({ links, getLinks, resetLinkReducer }) => {
-  const [shouldRenderList, setShouldRenderList] = useState(false)
+const VoteLinkPage = ({
+  links,
+  currentPage,
+  selectedOrder,
+  getLinks,
+  setCurrentPage,
+  resetLinkReducer
+}) => {
+  const [currentList, setCurrentList] = useState([])
+
+  const pageSize = 5
+  const total = links.length
+
+  const calculateCurrentList = () => {
+    const orderedList = orderBy(selectedOrder)
+    const startFrom = (currentPage - 1) * pageSize
+    const end = startFrom + pageSize
+    const currentList = orderedList.slice(startFrom, end)
+    setCurrentList(currentList)
+  }
 
   useEffect(() => {
     getLinks()
     return () => {
       resetLinkReducer()
     }
-  }, [getLinks, resetLinkReducer])
+    // for understanding (did)mount effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
-    const should = !!links.length
-    setShouldRenderList(should)
-  }, [links])
+    calculateCurrentList()
+  }, [links, currentPage, selectedOrder])
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+  }
+
+  const orderBy = (order) => {
+    if (!order || order === linksOrderOptions.options.default.value) {
+      return [...links]
+    }
+    let func
+    if (order === 'less') {
+      func = (a, b) => a.point - b.point || b.updatedDate - a.updatedDate
+    } else {
+      func = (a, b) => b.point - a.point || b.updatedDate - a.updatedDate
+    }
+    return [...links].sort(func)
+  }
 
   return (
     <div className='vote-link-page-container'>
       <AddLinkButton />
-      {shouldRenderList && <LinkList />}
+      <PaginatedList
+        currentList={currentList}
+        total={total}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  links: state.linkReducer.links
+  links: state.linkReducer.links,
+  currentPage: state.linkReducer.currentPage,
+  selectedOrder: state.linkReducer.selectedOrder
 })
 
 const mapDispatchToProps = {
   getLinks,
+  setCurrentPage,
   resetLinkReducer
 }
 
