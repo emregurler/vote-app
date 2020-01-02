@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import LinkList from '../LinkList/LinkList'
 import { Pagination } from 'antd'
 
-const PaginatedList = ({ currentList, total, currentPage, onPageChange }) => {
+const PaginatedList = ({
+  currentList,
+  pageSize,
+  total,
+  currentPage,
+  onPageChange
+}) => {
   const shouldRenderList = !!total
   return (
     <>
@@ -11,7 +17,7 @@ const PaginatedList = ({ currentList, total, currentPage, onPageChange }) => {
       <Pagination
         showLessItems
         hideOnSinglePage
-        pageSize={5}
+        pageSize={pageSize}
         total={total}
         currentPage={currentPage}
         onChange={onPageChange}
@@ -21,6 +27,7 @@ const PaginatedList = ({ currentList, total, currentPage, onPageChange }) => {
 }
 
 PaginatedList.propTypes = {
+  pageSize: PropTypes.number,
   currentList: PropTypes.array,
   total: PropTypes.number,
   currentPage: PropTypes.number,

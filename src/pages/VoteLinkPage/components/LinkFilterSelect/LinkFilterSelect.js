@@ -5,7 +5,7 @@ import { Select } from 'antd'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setSelectedOrder } from '../../../../redux/actions'
-import { linksOrderOptions } from '../../constants'
+import { linkOrderSelect } from '../../constants'
 
 const { Option } = Select
 
@@ -16,11 +16,11 @@ const LinkFilterSelect = ({ selectedOrder, setSelectedOrder }) => {
   return (
     <Select
       className='link-filter-select'
-      defaultValue={linksOrderOptions.defaultTitle}
+      defaultValue={linkOrderSelect.defaultTitle}
       onChange={onChangeFilter}
       {...(selectedOrder && { value: selectedOrder })}
     >
-      {Object.values(linksOrderOptions.options).map((filterOption, i) => (
+      {Object.values(linkOrderSelect.options).map((filterOption, i) => (
         <Option key={i} value={filterOption.value}>
           {filterOption.title}
         </Option>

@@ -3,11 +3,10 @@ import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { message } from 'antd'
 import types from './action-types'
 import {
-  getLinksSuccess,
   addLinkSuccess,
   deleteLinkSuccess,
-  upvoteLinkSuccess,
-  downvoteLinkSuccess
+  getSortedPaginatedLinks,
+  getSortedPaginatedLinksSuccess
 } from './actions'
 import API from './services'
 import CustomMessage from '../components/CustomMessage'
@@ -17,11 +16,22 @@ const generateCustomMessage = (name, restOfText) => {
 }
 
 const getStateLinks = (state) => state.linkReducer.links
+const getStatePage = (state) => state.linkReducer.currentPage
+const getStatePageSize = (state) => state.linkReducer.pageSize
+const getStateSelectedOrder = (state) => state.linkReducer.selectedOrder
 
-export function* getLinks() {
+export function* getCurrentList() {
   try {
-    const links = yield call(API.fetchGetLinks)
-    yield put(getLinksSuccess(links))
+    const page = yield select(getStatePage)
+    const pageSize = yield select(getStatePageSize)
+    const selectedOrder = yield select(getStateSelectedOrder)
+    const { links, totalCount } = yield call(
+      API.getSortedLinkPageByPoint,
+      selectedOrder,
+      page,
+      pageSize
+    )
+    yield put(getSortedPaginatedLinksSuccess(links, totalCount))
   } catch (error) {
     console.log('ERROR:', error)
   }
@@ -29,7 +39,7 @@ export function* getLinks() {
 
 export function* addLink({ newLink }) {
   try {
-    const addedLink = yield call(API.fetchAddLink, newLink)
+    const addedLink = yield call(API.addLink, newLink)
     yield put(addLinkSuccess(addedLink))
     message.success(generateCustomMessage(newLink.name, 'added'))
   } catch (error) {
@@ -39,7 +49,7 @@ export function* addLink({ newLink }) {
 
 export function* deleteLink({ id, callback }) {
   try {
-    yield call(API.fetchDeleteLink, id)
+    yield call(API.deleteLink, id)
     const links = yield select(getStateLinks)
     const deletedLink = links.find((link) => link.id === id)
     yield put(deleteLinkSuccess(id))
@@ -51,38 +61,27 @@ export function* deleteLink({ id, callback }) {
   }
 }
 
-export function* upvoteLink({ link }) {
+export function* updateLinkPoint({ type, link }) {
+  const change = type === types.UP_VOTE_LINK ? +1 : -1
   const updatedLink = {
     ...link,
-    point: link.point + 1,
+    point: link.point + change,
     updatedDate: new Date().getTime()
   }
   try {
-    const link = yield call(API.fetchUpdateVoteLink, updatedLink)
-    yield put(upvoteLinkSuccess(link))
-  } catch (error) {
-    console.log('ERROR:', error)
-  }
-}
-
-export function* downvoteLink({ link }) {
-  const updatedLink = {
-    ...link,
-    point: link.point - 1,
-    updatedDate: new Date().getTime()
-  }
-  try {
-    const link = yield call(API.fetchUpdateVoteLink, updatedLink)
-    yield put(downvoteLinkSuccess(link))
+    yield call(API.putLink, updatedLink)
+    yield put(getSortedPaginatedLinks())
   } catch (error) {
     console.log('ERROR:', error)
   }
 }
 
 export default function* rootSaga() {
-  yield takeLatest(types.GET_LINKS, getLinks)
+  yield takeLatest(types.GET_SORTED_PAGINATED_LINKS, getCurrentList)
+  yield takeLatest(types.SET_CURRENT_PAGE, getCurrentList)
+  yield takeLatest(types.SET_SELECTED_ORDER, getCurrentList)
   yield takeLatest(types.ADD_LINK, addLink)
   yield takeLatest(types.DELETE_LINK, deleteLink)
-  yield takeLatest(types.UP_VOTE_LINK, upvoteLink)
-  yield takeLatest(types.DOWN_VOTE_LINK, downvoteLink)
+  yield takeLatest(types.UP_VOTE_LINK, updateLinkPoint)
+  yield takeLatest(types.DOWN_VOTE_LINK, updateLinkPoint)
 }

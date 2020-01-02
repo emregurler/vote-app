@@ -11,6 +11,18 @@ export const getLinksSuccess = (links) => {
   }
 }
 
+export const getSortedPaginatedLinks = () => {
+  return { type: types.GET_SORTED_PAGINATED_LINKS }
+}
+
+export const getSortedPaginatedLinksSuccess = (links, total) => {
+  return {
+    type: types.GET_SORTED_PAGINATED_LINKS_SUCCESS,
+    links,
+    total
+  }
+}
+
 export const addLink = (newLink) => {
   return {
     type: types.ADD_LINK,
@@ -47,13 +59,6 @@ export const upvoteLink = (link) => {
   }
 }
 
-export const upvoteLinkSuccess = (link) => {
-  return {
-    type: types.UP_VOTE_LINK_SUCCESS,
-    link
-  }
-}
-
 export const downvoteLink = (link) => {
   return {
     type: types.DOWN_VOTE_LINK,
@@ -61,9 +66,9 @@ export const downvoteLink = (link) => {
   }
 }
 
-export const downvoteLinkSuccess = (link) => {
+export const putLinkSuccess = (link) => {
   return {
-    type: types.DOWN_VOTE_LINK_SUCCESS,
+    type: types.PUT_LINK_SUCCESS,
     link
   }
 }

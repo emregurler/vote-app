@@ -1,16 +1,12 @@
-export const linksOrderOptions = {
+export const linkOrderSelect = {
   defaultTitle: 'Order By',
   options: {
-    default: {
-      value: 'default',
-      title: 'Default'
-    },
-    low: {
-      value: 'less',
+    asc: {
+      value: 'asc',
       title: 'Less Voted'
     },
-    high: {
-      value: 'most',
+    desc: {
+      value: 'desc',
       title: 'Most Voted'
     }
   }
